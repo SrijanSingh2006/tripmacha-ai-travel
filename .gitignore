@@ -1,0 +1,51 @@
+# General & OS
+.DS_Store
+Thumbs.db
+*.bak
+.idea/
+.vscode/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# Frontend (React / Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+
+# Backend (Python)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.pytest_cache/
+backend/celerybeat-schedule
+backend/*.log
+*.log
+
+# Scraper & Browser Artifacts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+browser_profiles/
+backend/browser_profiles/
+backend/debug_page.html
+backend/debug_screenshot.png
+debug_page.html
+debug_screenshot.png
+
+# Database & Cache Dumps
+*.rdb
+dump.rdb
+postgres_local_data/
+
+# Windows Debug Symbols (redis debugging files)
+*.pdb

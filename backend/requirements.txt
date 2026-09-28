@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+celery
+redis
+playwright
+google-genai
+pydantic
+python-dotenv
+beautifulsoup4

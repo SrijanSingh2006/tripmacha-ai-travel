@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  # Message broker for Celery tasks
+  redis:
+    image: redis:7-alpine
+    container_name: tripmacha_redis
+    ports:
+      - "6379:6379"
+
+  # Local PostgreSQL database for user profiles, trips, and wallets
+  db:
+    image: postgres:15-alpine
+    container_name: tripmacha_db
+    environment:
+      POSTGRES_USER: tripmacha_admin
+      POSTGRES_PASSWORD: local_password_123
+      POSTGRES_DB: tripmacha_dev_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_local_data:/var/lib/postgresql/data
+
+  # FastAPI Web Server
+  backend:
+    build: ./backend
+    container_name: tripmacha_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - DATABASE_URL=postgresql://tripmacha_admin:local_password_123@db:5432/tripmacha_dev_db
+    depends_on:
+      - redis
+      - db
+
+  # Celery Worker running Playwright scrapers
+  celery_worker:
+    build: ./backend
+    container_name: tripmacha_worker
+    command: celery -A app.workers.celery_app.celery_app worker --loglevel=info --concurrency=1
+    volumes:
+      - ./backend:/app
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - DATABASE_URL=postgresql://tripmacha_admin:local_password_123@db:5432/tripmacha_dev_db
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_local_data:
