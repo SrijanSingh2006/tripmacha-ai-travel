@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "TripMacha",
+    "slug": "tripmacha-mobile",
+    "scheme": "tripmacha",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "com.tripmacha.mobile",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.tripmacha.mobile",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#5369F8",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "@react-native-community/datetimepicker",
+      [
+        "expo-notifications",
+        {
+          "defaultChannel": "trip-reminders",
+          "color": "#5369F8"
+        }
+      ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
+  }
+}
